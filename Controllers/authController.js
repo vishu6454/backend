@@ -42,4 +42,25 @@ export const sendOtp = async (req, res) => {
     return res.status(400).json({ message: "Email is required!" });
   }
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  await User.findOneAndUpdate(
+    { email },
+    { otp, otpExpiry: Date.now() + 300000 }
+  );
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Your OTP Code",
+    text: `Your OTP code is ${otp}. It will expire in 5 minutes.`,
+  });
+  res.json({ message: "OTP sent to email!" });
+};
+
+// verify OTP
+
+export const verifyotp = async (req, res) => {
+  const { email, otp } = req.body;
+  const user = await User.findOne({ email, otp });
+  if (!email) {
+    return res.status(400).json({ message: "Email is Invalid" });
+  }
 };
