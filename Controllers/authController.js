@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
-  const user = await User.create({ name, email, password: hashed });
+  const user = await User.create({ username, email, password: hashed });
   res.json({ msg: "User registered successfully", user });
 };
 // login
@@ -59,8 +59,23 @@ export const sendOtp = async (req, res) => {
 
 export const verifyotp = async (req, res) => {
   const { email, otp } = req.body;
-  const user = await User.findOne({ email, otp });
-  if (!email) {
-    return res.status(400).json({ message: "Email is Invalid" });
+  const user = await User.findOne({ email, otp, otpExpi: { $gt: Date.now() } });
+  if (!user) {
+    return res.status(400).json({ message: "Invalid or expired OTP!" });
   }
+  res.json({ message: "OTP verified successfully!" });
+  
 };
+
+
+// reset password
+
+export const resetPassword = async (req, res)=>{
+  const { email , newPassword  } = req.body;
+  const hashed = await bcrypt.hash( newPassword, 10 );
+   await User.findOneAndUpdate({email , newPassword:hashed });
+   
+
+
+}
+
