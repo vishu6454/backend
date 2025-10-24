@@ -20,5 +20,6 @@ export const createBlog = async (req , res) =>{
 export const getBlogs = async (req,res) =>{
     const blogs = await Blog.find().populate("author","email")
     res.json({blogs})
-    
+
 }
+
