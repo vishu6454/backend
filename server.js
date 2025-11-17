@@ -8,6 +8,8 @@ import dotenv from 'dotenv';
 
 import authRoutes from './routes/authRoutes.js';
 import blogRoutes from './routes/blogRoutes.js'; 
+import formRoutes from './routes/formRoutes.js';
+import tableRoutes from './routes/tableRoutes.js'
 
 dotenv.config();
 const app = express();
@@ -21,6 +23,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/forms', formRoutes);
+app.use('/api/tables', tableRoutes);
 
 app.listen(process.env.PORT,() => {
     console.log(`Server running on port ${process.env.PORT}`);
