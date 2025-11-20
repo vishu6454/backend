@@ -9,6 +9,6 @@ router.post("/create-table", createTableEntry);
 
 router.get("/get-table", getTable);
 
-router.delete ("/delete-table", deleteTable);
+router.delete ("/table/:id", deleteTable);
 
 export default router;

@@ -28,10 +28,11 @@ export const getTable = async (req, res) => {
 // delete table
 export const deleteTable = async (req, res) => {
      try {
-        const tables = await Table.findByIdAndDelete({_id:"691734549eb0d339e982472a"});
+        const { id } = req.params;
+        const table = await Table.findByIdAndDelete(id);
         res.json({
             msg: "Tables delete successfully",
-            data: tables
+           table
             
         });
     } catch (err) {
