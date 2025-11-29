@@ -22,4 +22,4 @@ export const getBlogs = async (req,res) =>{
     res.json({blogs})
 
 }
-
+  

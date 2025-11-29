@@ -28,13 +28,20 @@ export const getTable = async (req, res) => {
 // delete table
 export const deleteTable = async (req, res) => {
      try {
-        const { id } = req.params;
-        const table = await Table.findByIdAndDelete(id);
-        res.json({
-            msg: "Tables delete successfully",
-           table
+        // const { id } = req.params;
+
+        console.log (req.params.id)
+        console.log("hello world")
+        const  tableId = req.params.id
+        console.log(tableId)
+
+        // const table = await Table.findByIdAndDelete(id);
+        // res.json({
+        //     msg: "Tables delete successfully",
+        //    table
             
-        });
+        // });
+        res.send(tableId)
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }
